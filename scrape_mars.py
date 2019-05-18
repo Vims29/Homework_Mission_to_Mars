@@ -1,4 +1,4 @@
-#Dependencies
+#Dependencies Bimi Bisht
 import pandas as pd
 from splinter import Browser 
 from bs4 import BeautifulSoup
@@ -11,13 +11,11 @@ def scrape():
     mars_data= {}
     executable_path = {"executable_path": "chromedriver.exe"}
     browser = Browser("chrome", **executable_path, headless=False)
-
    
     # NASA Mars News URL of page to be scraped
     url = 'https://mars.nasa.gov/news/'
     browser.visit(url)
 
-    # Create BeautifulSoup object; parse with 'html.parser'
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
     #News Title
@@ -31,7 +29,6 @@ def scrape():
     # Add the news title and summary to the dictionary
     mars_data["news_title"] = news_title
     mars_data["new_p"] = news_p
-
 
     # # Featured Image
     Image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -52,7 +49,7 @@ def scrape():
 
 
 
-    # # Mars Weather
+    # # Mars Weather Tweet
     mars_tweet = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(mars_tweet)
 
@@ -72,14 +69,14 @@ def scrape():
 
     html=browser.html
     soup=BeautifulSoup(html,'html.parser')
-    # Extracting mars table
-    #set up lists to hold td elements which alternate between label and value
+    # Extracting mars table and setting up lists
+    
     trs=soup.find_all('tr')
     
     labels = []
     values = []
 
-    #for each tr element append the first td element to labels and the second to values
+
     for tr in trs:
         td_elements = tr.find_all('td')
         labels.append(td_elements[0].text)
@@ -101,7 +98,7 @@ def scrape():
 
 
 
-    # # Mars Hemispheres
+    # Mars Hemispheres
     USGS_site= 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
 
     browser.visit(USGS_site)
@@ -114,7 +111,6 @@ def scrape():
 
     hemispheres_image_urls = []
 
-    # print(len(images.find_all("div", class_="item")))
     for i in range(len(images.find_all("div", class_="item"))):
         # print(i)
         time.sleep(5)
@@ -140,7 +136,7 @@ def scrape():
         
         print(hemispheres_image_urls)
 
-        # Add the hemispheres data to the  dictionary
+        # Add the hemisphere's data to the  dictionary
         mars_data["hemispheres_image_urls"] = hemispheres_image_urls
 
     # Return the dictionary
@@ -148,8 +144,7 @@ def scrape():
 
     browser.quit()
         
-# Test Scrape_mars
-#if __name__ == "__main__":
+
    
       
 
